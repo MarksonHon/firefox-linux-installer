@@ -530,7 +530,7 @@ X-GNOME-FullName[zh_TW]=Firefox 網頁瀏覽器
 X-Flatpak=org.mozilla.firefox
 
 [Desktop Action new-window]
-Exec=/home/markson/.local/lib/firefox-dev/firefox --new-window %u
+Exec=/home/markson/.local/lib/firefox/firefox --new-window %u
 Name=New Window
 Name[ach]=New Window
 Name[af]=New Window
@@ -636,7 +636,7 @@ Name[zh_CN]=新建窗口
 Name[zh_TW]=開新視窗
 
 [Desktop Action new-private-window]
-Exec=/home/markson/.local/lib/firefox-dev/firefox --private-window %u
+Exec=/home/markson/.local/lib/firefox/firefox --private-window %u
 Name=New Private Window
 Name[ach]=New Private Window
 Name[af]=New Private Window
@@ -742,7 +742,7 @@ Name[zh_CN]=新建隐私窗口
 Name[zh_TW]=開新隱私視窗
 
 [Desktop Action open-profile-manager]
-Exec=/home/markson/.local/lib/firefox-dev/firefox --ProfileManager
+Exec=/home/markson/.local/lib/firefox/firefox --ProfileManager
 Name=Open Profile Manager
 Name[ach]=Open Profile Manager
 Name[af]=Open Profile Manager

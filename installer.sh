@@ -54,23 +54,45 @@ get_download_url() {
 }
 
 download_and_extract() {
-    aurora_install_path=~/.local/lib/firefox-aurora
-    stable_install_path=~/.local/lib/firefox
+    aurora_install_path="$HOME/.local/lib/firefox-aurora"
+    stable_install_path="$HOME/.local/lib/firefox"
     if [ "$edition" = "firefox-developer" ]; then
-        [ -d $aurora_install_path ] || mkdir -p $aurora_install_path
+        [ -d "$aurora_install_path" ] || mkdir -p "$aurora_install_path"
+        rm -rf "$aurora_install_path"
         install_path=$aurora_install_path
     elif [ "$edition" = "firefox" ]; then
-        [ -d $stable_install_path ] || mkdir -p $stable_install_path
+        [ -d "$stable_install_path" ] || mkdir -p "$stable_install_path"
+        rm -rf "$stable_install_path"
         install_path=$stable_install_path
     fi
+    mkdir -p "$install_path"
     echo "Downloading $edition..."
-    wget -O /tmp/firefox.tar.bz2 "$download_url"
+    wget -O /tmp/firefox.tar.xz "$download_url"
     echo "Extracting $edition..."
-    tar -xjf /tmp/firefox.tar.bz2 -C "$install_path"
-    rm /tmp/firefox.tar.bz2
+    tar -xvf /tmp/firefox.tar.xz -C /tmp
+    cp -r /tmp/firefox/* "$install_path"
+    rm /tmp/firefox.tar.xz
+    rm -rf "/tmp/firefox"
+}
+
+install_desktop_entry() {
+    if [ "$edition" = "firefox-developer" ]; then
+        icon_name=firefox-aurora
+    elif [ "$edition" = "firefox" ]; then
+        icon_name=firefox
+    fi
+    for icon_size in 16x16 32x32 48x48 64x64 128x128; do
+        [ -d "$HOME/.local/share/icons/hicolor/$icon_size"/apps ] || mkdir -p "$HOME/.local/share/icons/hicolor/$icon_size"/apps
+        [ -f "$HOME/.local/share/icons/hicolor/$icon_size/apps/$icon_name.png" ] && rm "$HOME/.local/share/hicolor/icons/$icon_size/apps/$icon_name.png"
+    done
+    for size in 16 32 48 64 128; do
+        cp "$install_path/browser/chrome/icons/default/default$size.png" "$HOME/.local/share/icons/hicolor/""$size""x""$size""/apps/$icon_name.png"
+    done
+    wget -O "$HOME/.local/share/applications/""$icon_name"".desktop" "https://github.com/MarksonHon/firefox-linux-installer/raw/refs/heads/main/firefox-desktops/$icon_name.desktop"
 }
 
 choose_edition
 choose_language
 get_download_url
 download_and_extract
+install_desktop_entry
