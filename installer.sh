@@ -96,3 +96,10 @@ choose_language
 get_download_url
 download_and_extract
 install_desktop_entry
+echo "If the Firefox icon is not a firefox icon but a blank one,"
+echo "you should run these commands:"
+echo 'cat << EOF | sudo tee /etc/profile.d/99-home-path.sh
+XDG_DATA_DIRS=\$HOME/.local/share:\$XDG_DATA_DIRS
+PATH=\$HOME/.local/bin:\$PATH
+EOF'
+echo "Then relogin or reboot your system."
