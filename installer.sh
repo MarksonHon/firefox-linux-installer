@@ -83,7 +83,7 @@ install_desktop_entry() {
     fi
     for icon_size in 16x16 32x32 48x48 64x64 128x128; do
         [ -d "$HOME/.local/share/icons/hicolor/$icon_size"/apps ] || mkdir -p "$HOME/.local/share/icons/hicolor/$icon_size"/apps
-        [ -L "$HOME/.local/share/icons/hicolor/$icon_size/apps/$icon_name.png" ] && rm "$HOME/.local/share/hicolor/icons/$icon_size/apps/$icon_name.png"
+        [ -L "$HOME/.local/share/icons/hicolor/$icon_size/apps/$icon_name.png" ] && rm "$HOME/.local/share/icons/hicolor/$icon_size/apps/$icon_name.png"
     done
     for size in 16 32 48 64 128; do
         ln -s "$install_path/browser/chrome/icons/default/default$size.png" "$HOME/.local/share/icons/hicolor/""$size""x""$size""/apps/$icon_name.png"
