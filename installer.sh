@@ -77,16 +77,16 @@ download_and_extract() {
 
 install_desktop_entry() {
     if [ "$edition" = "firefox-developer" ]; then
-        icon_name=firefox-aurora
+        icon_name=firefox-dev
     elif [ "$edition" = "firefox" ]; then
         icon_name=firefox
     fi
     for icon_size in 16x16 32x32 48x48 64x64 128x128; do
         [ -d "$HOME/.local/share/icons/hicolor/$icon_size"/apps ] || mkdir -p "$HOME/.local/share/icons/hicolor/$icon_size"/apps
-        [ -f "$HOME/.local/share/icons/hicolor/$icon_size/apps/$icon_name.png" ] && rm "$HOME/.local/share/hicolor/icons/$icon_size/apps/$icon_name.png"
+        [ -L "$HOME/.local/share/icons/hicolor/$icon_size/apps/$icon_name.png" ] && rm "$HOME/.local/share/hicolor/icons/$icon_size/apps/$icon_name.png"
     done
     for size in 16 32 48 64 128; do
-        cp "$install_path/browser/chrome/icons/default/default$size.png" "$HOME/.local/share/icons/hicolor/""$size""x""$size""/apps/$icon_name.png"
+        ln -s "$install_path/browser/chrome/icons/default/default$size.png" "$HOME/.local/share/icons/hicolor/""$size""x""$size""/apps/$icon_name.png"
     done
     wget -O "$HOME/.local/share/applications/""$icon_name"".desktop" "https://github.com/MarksonHon/firefox-linux-installer/raw/refs/heads/main/firefox-desktops/$icon_name.desktop"
 }
